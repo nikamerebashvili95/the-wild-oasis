@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GlobalStyles from "./styles/GlobalStyles";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
+import Booking from "./pages/Booking";
 import Cabins from "./pages/Cabins";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
@@ -12,7 +13,7 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
 import { Toaster } from "react-hot-toast";
-
+import Checkin from "./pages/Checkin";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -36,6 +37,15 @@ function App() {
             />
             <Route path="the-wild-oasis/dashboard" element={<Dashboard />} />
             <Route path="the-wild-oasis/bookings" element={<Bookings />} />
+            <Route
+              path="the-wild-oasis/bookings/:bookingId"
+              element={<Booking />}
+            ></Route>
+            <Route
+              path="the-wild-oasis/checkin/:bookingId"
+              element={<Checkin />}
+            />
+
             <Route path="the-wild-oasis/cabins" element={<Cabins />} />
             <Route path="the-wild-oasis/users" element={<Users />} />
             <Route path="the-wild-oasis/settings" element={<Settings />} />
