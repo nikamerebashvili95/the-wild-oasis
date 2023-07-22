@@ -14,6 +14,8 @@ import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
 import { Toaster } from "react-hot-toast";
 import Checkin from "./pages/Checkin";
+import ProtectedRoute from "./ui/ProtectedRoute";
+import { DarkModeProvider } from "./context/DarkModeContext";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -25,57 +27,65 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <GlobalStyles />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
+    <DarkModeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <GlobalStyles />
+        <BrowserRouter>
+          <Routes>
             <Route
-              index
-              element={<Navigate replace to="the-wild-oasis/dashboard" />}
-            />
-            <Route path="the-wild-oasis/dashboard" element={<Dashboard />} />
-            <Route path="the-wild-oasis/bookings" element={<Bookings />} />
-            <Route
-              path="the-wild-oasis/bookings/:bookingId"
-              element={<Booking />}
-            ></Route>
-            <Route
-              path="the-wild-oasis/checkin/:bookingId"
-              element={<Checkin />}
-            />
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route
+                index
+                element={<Navigate replace to="the-wild-oasis/dashboard" />}
+              />
+              <Route path="the-wild-oasis/dashboard" element={<Dashboard />} />
+              <Route path="the-wild-oasis/bookings" element={<Bookings />} />
+              <Route
+                path="the-wild-oasis/bookings/:bookingId"
+                element={<Booking />}
+              ></Route>
+              <Route
+                path="the-wild-oasis/checkin/:bookingId"
+                element={<Checkin />}
+              />
 
-            <Route path="the-wild-oasis/cabins" element={<Cabins />} />
-            <Route path="the-wild-oasis/users" element={<Users />} />
-            <Route path="the-wild-oasis/settings" element={<Settings />} />
-            <Route path="the-wild-oasis/account" element={<Account />} />
-          </Route>
-          <Route path="login" element={<Login />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster
-        position="top-center"
-        gutter={12}
-        containerStyle={{ margin: "8px" }}
-        toastOptions={{
-          success: {
-            duration: 3000,
-          },
-          error: {
-            duration: 5000,
-          },
-          style: {
-            fontSize: "16px",
-            maxWidth: "500px",
-            padding: "16px 24px",
-            backgroundColor: "var(--color-grey-0)",
-            color: "var(--color-grey-700)",
-          },
-        }}
-      />
-    </QueryClientProvider>
+              <Route path="the-wild-oasis/cabins" element={<Cabins />} />
+              <Route path="the-wild-oasis/users" element={<Users />} />
+              <Route path="the-wild-oasis/settings" element={<Settings />} />
+              <Route path="the-wild-oasis/account" element={<Account />} />
+            </Route>
+            <Route path="the-wild-oasis/login" element={<Login />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            style: {
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px",
+              backgroundColor: "var(--color-grey-0)",
+              color: "var(--color-grey-700)",
+            },
+          }}
+        />
+      </QueryClientProvider>
+    </DarkModeProvider>
   );
 }
 
