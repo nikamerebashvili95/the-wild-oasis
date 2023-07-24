@@ -42,7 +42,7 @@ function TodayItem({ activity }) {
           size="small"
           variation="primary"
           as={Link}
-          to={`/checkin/${id}`}
+          to={`/the-wild-oasis/checkin/${id}`}
         >
           Check in
         </Button>
